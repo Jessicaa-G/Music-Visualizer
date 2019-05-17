@@ -12,12 +12,20 @@ window.onload = function() {
 }
 
 var open = false;
-menu_btn.onclick = function() {
-	if (!open) openMenu();
+open_menu.onclick = function() {
+	openMenu();
 }
 
-// var document.getElementById('menu_container');
+close_menu.onclick = function() {
+	closeMenu();
+}
+
 function openMenu() {
 	menu_container.style.right = 0;
-	menu_btn.style.opacity = 0;
+	open_menu.style.opacity = 0;
+}
+
+function closeMenu() {
+	menu_container.style.right = '-' + menu_container.clientWidth + 'px';
+	open_menu.style.opacity = 1;
 }

@@ -9,14 +9,14 @@ var startTime;
 var curPlayTime = 0;
 var totalPlayTime = 0;
 var duration;
-var fileName;
 var playing = false;
+var isDone = true;
 
 audio_file.onchange = function() {
 	file = this.files[0];
 	addPlaylist(file);
 
-	if (curIndex < 0)
+	if ((curIndex  == pLength - 2 && isDone))
 		nextSong();
 };
 
@@ -62,6 +62,7 @@ function play(buffer) {
 	s.start(0, totalPlayTime);
 	startTime = context.currentTime;
 	playing = true;
+	isDone = false;
 	
 	var sourceJs = context.createScriptProcessor(2048);
 	sourceJs.buffer = buffer;
@@ -99,6 +100,7 @@ function updateTime() {
 		reset();
 		nextSong();
 		playing = false;
+		isDone = true;
 		return;
 	}
 
