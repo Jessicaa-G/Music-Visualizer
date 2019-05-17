@@ -11,18 +11,13 @@ window.onload = function() {
 	loading_screen.style.display = "none";
 }
 
+var open = false;
+menu_btn.onclick = function() {
+	if (!open) openMenu();
+}
 
-// var loading = (function () {
-// 	var index = 0;
-// 	while (!ready) {
-// 		console.log(index);
-
-// 		setTimeout(function(){
-// 			console.log(index);
-// 			e.innerHTML += text[count];
-// 			count++;
-// 		}, 500);
-
-// 		if (count >= text.length) count = 0;
-// 	}
-// })();
+// var document.getElementById('menu_container');
+function openMenu() {
+	menu_container.style.right = 0;
+	menu_btn.style.opacity = 0;
+}

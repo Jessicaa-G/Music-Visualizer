@@ -9,6 +9,7 @@ html, body {
 	font-weight: 300;
 	overflow: hidden;
 	letter-spacing: 2px;
+	color: white;
 }
 
 canvas {
@@ -106,4 +107,51 @@ canvas {
 
 #loading_screen > img {
 	max-height: 15%;
+}
+
+#menu_btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 2em;
+	cursor: pointer;
+}
+
+#menu_btn > img {
+	max-height: 40px;
+}
+
+#menu_container {
+	position: absolute;
+	z-index: 150;
+	background-color: rgba(50, 50, 50, 0.9);
+	height: 100%;
+	width: 250px;
+	right: -100%;
+
+	transition: 0.1s;
+}
+
+#menu_title {
+	width: 100%;
+	text-align: center;
+	line-height: 1.5em;
+	/*margin: 5px 0;*/
+	padding: 5px 0;
+}
+
+#playlist {
+	height: calc(100% - 66px);
+	width: 100%;
+	font-size: 0.7em;
+}
+
+#playlist > .title {
+	margin-left: 1em;
+	border-left: 3px solid white;
+	padding: 0 1em;
+}
+
+#playlist > .current {
+	font-weight: 700;
 }

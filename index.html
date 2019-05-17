@@ -1,43 +1,73 @@
 <!DOCTYPE html>
 
+<!-- Created by riyanto r from the Noun Project (cube menu) -->
 <html>
 	<head>
 		<meta charset=utf-8>
 		<title>Music Visualizer</title>
 
 		<!-- Music by Ranjit from the Noun Project -->
-		<link rel="shortcut icon" href="music_note.png">
+		<link rel="shortcut icon" href="img/music_note.png">
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<div id="loading_screen">
-			<img src="loading.svg">
+			<img src="img/loading.svg">
 			<p>LOADING...</p>
 		</div>
 
 		<div id="header">
-			<audio id="audio_player"></audio>
-			<input id="audio_file" type="file" accept="audio/*" value="Select Song"></input>
-			<p>
-			  Most likely tempo: <span id="output"></span>
-			</p>
+			<div id="banner">
+				<audio id="audio_player"></audio>
+				<input id="audio_file" type="file" accept="audio/*" value="Select Song"></input>
+				<p>
+				  Most likely tempo: <span id="output"></span>
+				</p>
+
+				<div id="menu_btn">
+					<img src="img/menu.svg">
+				</div>
+			</div>
 
 			<p id="file_name"></p>
+		</div>
+
+		<!-- <div id="menu_btn"> -->
+			<!-- <img src="img/menu.svg"> -->
+		<!-- </div> -->
+
+		<div id="menu_container">
+			<div id="close_menu">
+				<!-- <img src=""> -->
+			</div>
+			<p id="menu_title">Playlist</p>
+
+			<div id="playlist">
+				
+			</div>
 		</div>
 
 		<div id="footer">
 			<div id="playback-container">
 				<!-- Created by Benang Kusut from the Noun Project -->
+				<button class="playback-btn" id="back_playback">
+					<img src="img/back.svg" class="footer-img">
+					play
+				</button>
 				<button class="playback-btn" id="play_playback">
-					<img src="play.svg" class="footer-img">
+					<img src="img/play.svg" class="footer-img">
 					play
 				</button>
 				<button class="playback-btn" id="pause_playback">
-					<img src="pause.svg" class="footer-img">
+					<img src="img/pause.svg" class="footer-img">
 					pause
 				</button>
-				<button class="playback-btn" id="stop_playback" type="reset">
-					<img src="stop.svg" class="footer-img">
+				<!-- <button class="playback-btn" id="stop_playback" type="reset">
+					<img src="img/stop.svg" class="footer-img">
+					stop
+				</button> -->
+				<button class="playback-btn" id="skip_playback">
+					<img src="img/skip.svg" class="footer-img">
 					stop
 				</button>
 			</div>
@@ -49,6 +79,7 @@
 
 		<script src="app.js"></script>
 		<script src="three.js"></script>
+		<script src="playlist.js"></script>
 		<script src="audio.js"></script>
 		<script src="render.js"></script>
 	</body>

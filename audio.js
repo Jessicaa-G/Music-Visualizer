@@ -13,18 +13,19 @@ var fileName;
 var playing = false;
 
 audio_file.onchange = function() {
-	if (playing){
-		stop();
-		reset();
-	}
+	file = this.files[0];
+	addPlaylist(file);
+
+	if (curIndex < 0)
+		nextSong();
+};
+
+function read(f) {
+	if (!f) return;
 
 	var reader = new FileReader();
-	file = this.files[0];
-
-	if (!file) return;
 
 	context = new (window.AudioContext || window.webkitAudioContext)();
-
 	reader.onload = function() {
 		context.decodeAudioData(reader.result, function(buffer) {
 			duration = buffer.duration;
@@ -32,8 +33,8 @@ audio_file.onchange = function() {
 		});
 	};
 
-	reader.readAsArrayBuffer(file);
-};
+	reader.readAsArrayBuffer(f);
+}
 
 pause_playback.onclick = function() {
 	if (playing) {
@@ -41,25 +42,16 @@ pause_playback.onclick = function() {
 	}
 }
 
-stop_playback.onclick = function() {
-	if (playing) {
-		stop();
-		reset();
-	}
-};
+// stop_playback.onclick = function() {
+// 	if (playing) {
+// 		stop();
+// 		reset();
+// 	}
+// };
 
 play_playback.onclick = function() {
 	if (!playing && source)
 		play(source.buffer);
-}
-
-function updateAll(buffer) {
-	file_name.innerHTML = `
-		${file.name}
-		<hr color="white" align="center" size="1px" width="10%" noshade>
-	`;
-
-	play(buffer);
 }
 
 function play(buffer) {
@@ -100,8 +92,13 @@ function play(buffer) {
 }
 
 function updateTime() {
-	if (!playing || totalPlayTime + curPlayTime > duration) {
-		// stop();
+	if (!playing) 
+		return;
+
+	if (totalPlayTime + curPlayTime >= duration) {
+		reset();
+		nextSong();
+		playing = false;
 		return;
 	}
 
@@ -160,7 +157,7 @@ function prepare(buffer) {
 		process(e);
 	};
 
-	updateAll(buffer);
+	play(buffer);
 }
 
 function process(e) {

@@ -10,7 +10,7 @@ renderer.setPixelRatio((window.devicePixelRatio) ? window.devicePixelRatio : 1);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
-
+console.log("why");
 var n = 125;
 for(var i = 0; i < n; i++) {
 	geometry = new THREE.CubeGeometry(0.1, 0.1, 0.1);
