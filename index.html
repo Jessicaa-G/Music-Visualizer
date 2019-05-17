@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Music Visualizer</title>
+
+		<!-- Music by Ranjit from the Noun Project -->
+		<link rel="shortcut icon" href="music_note.png">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div id="loading_screen">
+			<img src="loading.svg">
+			<p>LOADING...</p>
+		</div>
+
+		<div id="header">
+			<audio id="audio_player"></audio>
+			<input id="audio_file" type="file" accept="audio/*" value="Select Song"></input>
+			<p>
+			  Most likely tempo: <span id="output"></span>
+			</p>
+
+			<p id="file_name"></p>
+		</div>
+
+		<div id="footer">
+			<div id="playback-container">
+				<!-- Created by Benang Kusut from the Noun Project -->
+				<button class="playback-btn" id="play_playback">
+					<img src="play.svg" class="footer-img">
+					play
+				</button>
+				<button class="playback-btn" id="pause_playback">
+					<img src="pause.svg" class="footer-img">
+					pause
+				</button>
+				<button class="playback-btn" id="stop_playback" type="reset">
+					<img src="stop.svg" class="footer-img">
+					stop
+				</button>
+			</div>
+
+			<div id="time">
+				<div id="inner-time"></div>
+			</div>
+		</div>
+
+		<script src="app.js"></script>
+		<script src="three.js"></script>
+		<script src="audio.js"></script>
+		<script src="render.js"></script>
+	</body>
+</html>
