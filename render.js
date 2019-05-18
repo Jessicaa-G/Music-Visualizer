@@ -17,7 +17,7 @@ function init() {
 
 	document.body.appendChild(renderer.domElement);
 
-	var n = 125;
+	var n = 100;
 
 	var cWidth = width / 30;
 	var dist = (cWidth - 2) / n;

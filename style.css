@@ -113,7 +113,7 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	margin: 2em;
+	margin: 1.8em;
 	cursor: pointer;
 }
 
@@ -124,8 +124,9 @@ canvas {
 #close_menu {
 	position: absolute;
 	top: 0;
-	left: 0;
-	margin: 0.7em;
+	right: 0;
+	/*padding: 1.2em 0;*/
+	margin: 1.3em;
 	cursor: pointer;
 }
 
@@ -148,8 +149,9 @@ canvas {
 	width: 100%;
 	text-align: center;
 	line-height: 1.5em;
-	/*margin: 5px 0;*/
-	padding: 5px 0;
+	margin: 0;
+	padding: 1.2em 0;
+	background-color: rgba(60, 60, 60, 0.9);
 }
 
 #playlist {
@@ -168,4 +170,17 @@ canvas {
 
 #playlist > .current {
 	font-weight: 700;
+}
+
+#credit {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	font-size: 0.75em;
+	color: grey;
+	margin: 5px 10px;
+}
+
+#credit > p {
+	margin: 0;
 }
