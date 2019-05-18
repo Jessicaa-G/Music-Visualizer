@@ -5,10 +5,12 @@ var s;
 var array = new Array();
 var boost;
 var analyser;
+
 var startTime;
 var curPlayTime = 0;
 var totalPlayTime = 0;
 var duration;
+
 var playing = false;
 var isDone = true;
 
@@ -19,6 +21,42 @@ audio_file.onchange = function() {
 	if ((curIndex  == pLength - 2 && isDone))
 		nextSong();
 };
+
+pause_playback.onclick = function() {
+	if (playing) {
+		stop();
+	}
+}
+
+// stop_playback.onclick = function() {
+// 	if (playing) {
+// 		reset();
+// 	}
+// };
+
+play_playback.onclick = function() {
+	if (!playing && source)
+		play(source.buffer);
+}
+
+skip_playback.onclick = function() {
+	if (curIndex < pLength - 1) {
+		reset();
+		nextSong();
+	}
+}
+
+back_playback.onclick = function() {
+	if (totalPlayTime + curPlayTime > 2 || curIndex == 0) {
+		stop();	
+		totalPlayTime = 0;
+		curPlayTime = 0;
+		play(source.buffer);
+	} else {
+		reset();
+		prevSong();
+	}
+}
 
 function read(f) {
 	if (!f) return;
@@ -34,24 +72,6 @@ function read(f) {
 	};
 
 	reader.readAsArrayBuffer(f);
-}
-
-pause_playback.onclick = function() {
-	if (playing) {
-		stop();
-	}
-}
-
-// stop_playback.onclick = function() {
-// 	if (playing) {
-// 		stop();
-// 		reset();
-// 	}
-// };
-
-play_playback.onclick = function() {
-	if (!playing && source)
-		play(source.buffer);
 }
 
 function play(buffer) {
@@ -122,6 +142,8 @@ function stop() {
 }
 
 function reset() {
+	stop();
+
 	audio_file.value = '';
 
 	file_name.innerHTML = "";
@@ -155,131 +177,131 @@ function prepare(buffer) {
 
 	offlineContext.startRendering();
 
-	offlineContext.oncomplete = function(e) {
-		process(e);
-	};
+	// offlineContext.oncomplete = function(e) {
+	// 	process(e);
+	// };
 
 	play(buffer);
 }
 
-function process(e) {
-	var filteredBuffer = e.renderedBuffer;
-	//If you want to analyze both channels, use the other channel later
-	var data = filteredBuffer.getChannelData(0);
-	var max = arrayMax(data);
-	var min = arrayMin(data);
+// function process(e) {
+// 	var filteredBuffer = e.renderedBuffer;
+// 	//If you want to analyze both channels, use the other channel later
+// 	var data = filteredBuffer.getChannelData(0);
+// 	var max = arrayMax(data);
+// 	var min = arrayMin(data);
 
-	var threshold = min + (max - min) * 0.5;
-	var peaks = getPeaksAtThreshold(data, threshold);
-	var intervalCounts = countIntervalsBetweenNearbyPeaks(peaks);
-	var tempoCounts = groupNeighborsByTempo(intervalCounts);
+// 	var threshold = min + (max - min) * 0.5;
+// 	var peaks = getPeaksAtThreshold(data, threshold);
+// 	var intervalCounts = countIntervalsBetweenNearbyPeaks(peaks);
+// 	var tempoCounts = groupNeighborsByTempo(intervalCounts);
 	
-	tempoCounts.sort(function(a, b) {
-		return b.count - a.count;
-	});
+// 	tempoCounts.sort(function(a, b) {
+// 		return b.count - a.count;
+// 	});
 	
-	if (tempoCounts.length) {
-		output.innerHTML = tempoCounts[0].tempo;
-	}
-}
+// 	if (tempoCounts.length) {
+// 		output.innerHTML = tempoCounts[0].tempo;
+// 	}
+// }
 
-// http://tech.beatport.com/2014/web-audio/beat-detection-using-web-audio/
-function getPeaksAtThreshold(data, threshold) {
-	var peaksArray = [];
-	var length = data.length;
+// // http://tech.beatport.com/2014/web-audio/beat-detection-using-web-audio/
+// function getPeaksAtThreshold(data, threshold) {
+// 	var peaksArray = [];
+// 	var length = data.length;
 	
-	for (var i = 0; i < length;) {
-		if (data[i] > threshold) {
-			peaksArray.push(i);
-			// Skip forward ~ 1/4s to get past this peak.
-			i += 10000;
-		}
+// 	for (var i = 0; i < length;) {
+// 		if (data[i] > threshold) {
+// 			peaksArray.push(i);
+// 			// Skip forward ~ 1/4s to get past this peak.
+// 			i += 10000;
+// 		}
 		
-		i++;
+// 		i++;
 	
-	}
+// 	}
 
-	return peaksArray;
-}
+// 	return peaksArray;
+// }
 
-function countIntervalsBetweenNearbyPeaks(peaks) {
-	var intervalCounts = [];
+// function countIntervalsBetweenNearbyPeaks(peaks) {
+// 	var intervalCounts = [];
 	
-	peaks.forEach(function(peak, index) {
-		for (var i = 0; i < 10; i++) {
-			var interval = peaks[index + i] - peak;
-			var foundInterval = intervalCounts.some(function(intervalCount) {
+// 	peaks.forEach(function(peak, index) {
+// 		for (var i = 0; i < 10; i++) {
+// 			var interval = peaks[index + i] - peak;
+// 			var foundInterval = intervalCounts.some(function(intervalCount) {
 			
-			if (intervalCount.interval === interval)
-				return intervalCount.count++;
-			});
+// 			if (intervalCount.interval === interval)
+// 				return intervalCount.count++;
+// 			});
 
-			//Additional checks to avoid infinite loops in later processing
-			if (!isNaN(interval) && interval !== 0 && !foundInterval) {
-				intervalCounts.push({
-					interval: interval,
-					count: 1
-				});
-			}
-		}
-	});
+// 			//Additional checks to avoid infinite loops in later processing
+// 			if (!isNaN(interval) && interval !== 0 && !foundInterval) {
+// 				intervalCounts.push({
+// 					interval: interval,
+// 					count: 1
+// 				});
+// 			}
+// 		}
+// 	});
 	
-	return intervalCounts;
-}
+// 	return intervalCounts;
+// }
 
-function groupNeighborsByTempo(intervalCounts) {
-	var tempoCounts = [];
+// function groupNeighborsByTempo(intervalCounts) {
+// 	var tempoCounts = [];
 	
-	intervalCounts.forEach(function(intervalCount) {
-		//Convert an interval to tempo
-		var theoreticalTempo = 60 / (intervalCount.interval / 44100);
-		theoreticalTempo = Math.round(theoreticalTempo);
+// 	intervalCounts.forEach(function(intervalCount) {
+// 		//Convert an interval to tempo
+// 		var theoreticalTempo = 60 / (intervalCount.interval / 44100);
+// 		theoreticalTempo = Math.round(theoreticalTempo);
 		
-		if (theoreticalTempo === 0) {
-			return;
-		}
+// 		if (theoreticalTempo === 0) {
+// 			return;
+// 		}
 		
-		// Adjust the tempo to fit within the 90-180 BPM range
-		while (theoreticalTempo < 90) theoreticalTempo *= 2;
-		while (theoreticalTempo > 180) theoreticalTempo /= 2;
+// 		// Adjust the tempo to fit within the 90-180 BPM range
+// 		while (theoreticalTempo < 90) theoreticalTempo *= 2;
+// 		while (theoreticalTempo > 180) theoreticalTempo /= 2;
 
-		var foundTempo = tempoCounts.some(function(tempoCount) {
-			if (tempoCount.tempo === theoreticalTempo)
-				return tempoCount.count += intervalCount.count;
-		});
+// 		var foundTempo = tempoCounts.some(function(tempoCount) {
+// 			if (tempoCount.tempo === theoreticalTempo)
+// 				return tempoCount.count += intervalCount.count;
+// 		});
 
-		if (!foundTempo) {
-			tempoCounts.push({
-				tempo: theoreticalTempo,
-				count: intervalCount.count
-			});
-		}
-	});
+// 		if (!foundTempo) {
+// 			tempoCounts.push({
+// 				tempo: theoreticalTempo,
+// 				count: intervalCount.count
+// 			});
+// 		}
+// 	});
 
-	return tempoCounts;
-}
+// 	return tempoCounts;
+// }
 
-function arrayMin(arr) {
-	var len = arr.length,
-		min = Infinity;
+// function arrayMin(arr) {
+// 	var len = arr.length,
+// 		min = Infinity;
 
-	while (len--) {
-		if (arr[len] < min) {
-			min = arr[len];
-	}
-  }
-  return min;
-}
+// 	while (len--) {
+// 		if (arr[len] < min) {
+// 			min = arr[len];
+// 	}
+//   }
+//   return min;
+// }
 
-function arrayMax(arr) {
-	var len = arr.length,
-		max = -Infinity;
+// function arrayMax(arr) {
+// 	var len = arr.length,
+// 		max = -Infinity;
 	
-	while (len--) {
-		if (arr[len] > max) {
-			max = arr[len];
-		}
-	}
+// 	while (len--) {
+// 		if (arr[len] > max) {
+// 			max = arr[len];
+// 		}
+// 	}
 
-	return max;
-}
+// 	return max;
+// }

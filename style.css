@@ -7,7 +7,7 @@ html, body {
 	padding: 0;
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
-	/*overflow: hidden;*/
+	overflow: hidden;
 	letter-spacing: 2px;
 	color: white;
 }
@@ -156,12 +156,14 @@ canvas {
 	height: calc(100% - 66px);
 	width: 100%;
 	font-size: 0.7em;
+	overflow-y: scroll;
 }
 
 #playlist > .title {
 	margin-left: 1em;
 	border-left: 3px solid white;
 	padding: 0 1em;
+	cursor: default;
 }
 
 #playlist > .current {

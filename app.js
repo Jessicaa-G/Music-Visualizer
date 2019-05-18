@@ -4,10 +4,10 @@ var count = 0;
 var ready = false;
 
 window.onload = function() {
-	// init();
+	init();
 	// ready = true;
 	// console.log("ready");
-	// setTimeout(function() {loading_screen.style.display = "none"}, 5000)
+
 	loading_screen.style.display = "none";
 }
 
