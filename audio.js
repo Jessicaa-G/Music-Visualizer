@@ -48,10 +48,14 @@ skip_playback.onclick = function() {
 
 back_playback.onclick = function() {
 	if (totalPlayTime + curPlayTime > 2 || curIndex == 0) {
-		stop();	
+		timeBarWidth(0);
 		totalPlayTime = 0;
 		curPlayTime = 0;
-		play(source.buffer);
+
+		if(playing) {
+			stop();	
+			play(source.buffer);
+		}
 	} else {
 		reset();
 		prevSong();

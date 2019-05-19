@@ -5,8 +5,6 @@ var ready = false;
 
 window.onload = function() {
 	init();
-	// ready = true;
-	// console.log("ready");
 
 	loading_screen.style.display = "none";
 }
