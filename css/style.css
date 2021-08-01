@@ -1,16 +1,11 @@
 
-@font-face {
-	font-family: 'simple';
-	src: url('fonts/simple.ttf');
-}
-
 html,
 body {
 	height: 100%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	font-family: 'simple';
+	/* font-family: 'simple'; */
 	font-weight: 300;
 	overflow: hidden;
 	letter-spacing: 2px;
@@ -67,7 +62,7 @@ body {
 .effect-btn {
 	background-color: transparent;
 	font-size: 1em;
-	font-family: 'simple';
+	/* font-family: 'simple'; */
 	font-weight: 300;
 	border: none;
 }
@@ -120,7 +115,7 @@ body {
 	background-color: transparent;
 	color: floralwhite;
 	font-size: 1em;
-	font-family: 'simple';
+	/* font-family: 'simple'; */
 	letter-spacing: 2px;
 	font-weight: 300;
 	border: none;
